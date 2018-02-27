@@ -6,23 +6,23 @@
 
 using namespace std;
 
-set<char> tovisit;
-set<char> reached;
-// set<char> pointedto;
-unordered_map<int, vector<int> > mp;
 
-void dfs(unordered_map<int, vector<int> > mp,int level){
+void dfs(unordered_map<int, vector<int> > mp, set<int> tovisit,int level){
   tovisit.erase(level);
   for(int i=0;i<mp[level].size();i++){
-       dfs(mp,mp[level][i]);
+       dfs(mp,tovisit, mp[level][i]);
   }
 }
 
 int main(){
   int a,b;
   int cas=1;
-
+  // set<char>::iterator it;
   while(true){
+    set<int> tovisit;
+    set<int> reached;
+    set<int> pointedto;
+    unordered_map<int, vector<int> > mp;
     bool done=false;
     bool fucked=false;
     int start=0;
@@ -42,8 +42,8 @@ int main(){
       }
       tovisit.insert(a);
       tovisit.insert(b);
-      // pointedto.insert(a);
-      // if(pointedto.find(b)!=pointedto.end()) pointedto.erase(b);
+      pointedto.insert(a);
+      if(pointedto.find(b)!=pointedto.end()) pointedto.erase(b);
       if(mp.find(a)!=mp.end()) mp[a].push_back(b);
       else{
         vector<int> v;
@@ -53,8 +53,8 @@ int main(){
     }
 
     reached.clear();
-    // int pto=*pointedto.begin();
-    // pointedto.clear();
+    int pto=*pointedto.begin();
+    pointedto.clear();
 
     // for(auto it=mp.begin();it!=mp.end();it++){
     //   printf("NODE %d: ",it->first);
@@ -69,8 +69,7 @@ int main(){
 
     if(fucked) printf("Case %d is not a tree.\n",cas);
     else{
-      for(auto it=mp.begin();it!=mp.end();it++)
-        dfs(mp,it->first);
+        dfs(mp,tovisit, pto);
       if(tovisit.size()>0){
         printf("Case %d is not a tree\n",cas);
       }else{
