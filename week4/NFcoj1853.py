@@ -4,14 +4,21 @@ def fact(a):
         return 1
     return fact(a-1)*a
 
+def comb(a,b):
+	return fact(a)/(fact(b)*fact(a-b)) 	
+
 T=int(raw_input())
 
 for x in range(T):
-    i=int(raw_input())
-    if i==1:
-        temp=fact((i+1)*(i+1))/(6*fact(((i+1)*(i+1))-3))
-        print(temp)
-    else:
-        temp=fact((i+1)*(i+1))/(6*fact(((i+1)*(i+1))-3))
-        temp1=(fact(i+1)*2*(i+1))/(6*fact(((i+1))-3))
-        print(temp-temp1)
+    n=int(raw_input())+1
+    tot=comb(n*n,3)
+    if n>=3:
+        tot=tot-(2*n*comb(n,3))
+	for i in range(3,n):
+		tot=tot-(2*comb(i,3))
+		tot=tot-(2*comb(n,3))	
+    if n>=5:
+	for i in range(2,int(n/2)):
+		tot=tot-(4*(n-i)*comb(int(n/i),3))
+
+print(tot)

@@ -29,14 +29,14 @@ int main(){
 
 	for(int i=0;i<vertice;i++){
 		if(goOn==false) break;
-		if(visited[i]==0){
+		if(visited[i]==0){ 5
 			int curr=i;
 			int count=1;
 			while(true){
 				visited[curr]=1;
 				if(arr[curr]==-1) break;
 				if(arr[curr]==i){
-					if(count%3!=0){
+					if(count%6!=0){
 						anotherCycle=false;
 						goOn=false;
 					}
